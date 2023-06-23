@@ -39,16 +39,18 @@ async def send_welcome(message: types.Message):
 async def checkimlo(message: types.Message):
     # old style:
     # await bot.send_message(message.chat.id, message.text)
-    word = message.text
-    result = wordcheck(word)
-    javob = lambda word: to_cyrillic(word) if word.isascii() else to_latin(word)
-    if result['availabe']:
-        response = f"✅{javob(word.capitalize())}"
-    else:
-        response = f"❌{javob(word.capitalize())}\n"
-        for text in result['matches']:
-            response += f"✅{javob(text.capitalize())}\n"
-    await message.reply(response)
+    word1 = message.text
+    words = word1.split(' ')
+    for word in words:
+        result = wordcheck(word)
+        javob = lambda word: to_cyrillic(word) if word.isascii() else to_latin(word)
+        if result['availabe']:
+            response = f"✅{javob(word.capitalize())}"
+        else:
+            response = f"❌{javob(word.capitalize())}\n"
+            for text in result['matches']:
+                response += f"✅{javob(text.capitalize())}\n"
+        await message.reply(response)
    
 
 

@@ -6,11 +6,20 @@ def wordcheck(word,words = words):
     matches = set(get_close_matches(word,words))
     available = False
 
-    for match in matches:
+    if word in matches:
         available = True
-        matches = match
+        matches = word
+    elif 'х' in word:
+        word = word.replace('x','ҳ')
+        matches.update(get_close_matches(word,words))   
+    elif 'ҳ' in word:
+        word = word.replace('ҳ','x')
+        matches.update(get_close_matches(word,words))  
 
 
     return {'availabe':available,'matches':matches}
 
-print(wordcheck('абад'))
+if __name__ == '__main__':
+    print(wordcheck('абад'))
+    print(wordcheck('хидли'))
+    print(wordcheck('ҳидли'))
